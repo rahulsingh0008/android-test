@@ -3,6 +3,7 @@ package com.example.campusnavigation
 import org.osmdroid.util.GeoPoint
 
 object CampusLocations {
+    // manually pin point each n every campus building to find it's lat and long
     val locations = mapOf(
         "B.Tech Block" to GeoPoint(30.267245, 77.995272),
         "CS/IT Block" to GeoPoint(30.268819, 77.993237),
