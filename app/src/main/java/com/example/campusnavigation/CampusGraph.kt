@@ -1,18 +1,21 @@
 package com.example.campusnavigation
 
-import android.util.Log
 import org.osmdroid.util.GeoPoint
 
+//  data class: special type of class used to hold data.
+//  automatically provides many useful features like toString(), equals(), hashCode(),
+//  and copy() functions — without writing extra code.
 data class CampusNode(val location: GeoPoint, val name: String)
 
 object CampusGraph {
 
-    // Automatically map all locations from CampusLocations.kt
+    // map all locations from CampusLocations.kt
     val nodes: Map<String, CampusNode> = CampusLocations.locations.mapValues { (name, point) ->
         CampusNode(point, name)
     }
 
-    // Function to calculate the distance between two points in meters
+    // Function to calculate the straight-line distance between two points
+    // uses haversine formula under the hood
     fun calculateDistance(p1: GeoPoint, p2: GeoPoint): Double {
         return p1.distanceToAsDouble(p2)  // Returns distance in meters
     }

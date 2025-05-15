@@ -2,6 +2,7 @@ package com.example.campusnavigation
 
 import org.osmdroid.util.GeoPoint
 
+//makes 'CampusLocations' singleton, can access location data globally in app without instantiating the class
 object CampusLocations {
     // manually pin point each n every campus building to find it's lat and long
     val locations = mapOf(
