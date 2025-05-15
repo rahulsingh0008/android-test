@@ -24,28 +24,36 @@ import org.osmdroid.views.overlay.Polyline
 
 class MainActivity : AppCompatActivity() {
 
+    // for displaying OpenStreetMap
     lateinit var map: MapView
+    // For accessing current location using Google Location Services
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    // To react to location updates (currently not used)
     private lateinit var locationCallback: LocationCallback
+    // Dropdowns for selecting starting and ending campus locations
     private lateinit var startSpinner: Spinner
     private lateinit var endSpinner: Spinner
+    // button to draw the path
     private lateinit var drawButton: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Load OpenStreetMap settings
+        // Loads the default map settings
         Configuration.getInstance().load(applicationContext, androidx.preference.PreferenceManager.getDefaultSharedPreferences(applicationContext))
 
+        // for screen UI
         setContentView(R.layout.activity_maps)
 
         startSpinner = findViewById(R.id.startLocationSpinner)
         endSpinner = findViewById(R.id.endLocationSpinner)
         drawButton = findViewById(R.id.drawPathButton)
 
+        // list containing all the campus location names
         val locationNames = CampusLocations.locations.keys.toList()
 
+        // Creates an adapter to show the location names in dropdowns
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, locationNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -58,19 +66,18 @@ class MainActivity : AppCompatActivity() {
         // Set the map to use OpenStreetMap tiles
         map.setTileSource(TileSourceFactory.MAPNIK)
 
-        // Enable multi-touch controls (zoom, pan)
+        // Enables pinch-zoom and drag with fingers
         map.setMultiTouchControls(true)
 
-        // Set initial location (replace with your campus coordinates)
         val startPoint = GeoPoint(30.2675, 77.9960) // Replace with actual latitude & longitude of your campus
         map.controller.setZoom(18.0)
         map.controller.setCenter(startPoint)
 
+        // Prepares to use the user’s current GPS location (currently not in use)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-//        getCurrentLocation()
+        // getCurrentLocation()
 
-        // Loop through the campus locations and add markers dynamically
         for ((title, location) in CampusLocations.locations) {
             addMarker(location, title)
         }
